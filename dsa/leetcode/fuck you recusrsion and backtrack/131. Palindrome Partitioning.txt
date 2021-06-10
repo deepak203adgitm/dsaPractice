@@ -1,0 +1,73 @@
+131. Palindrome Partitioning
+Medium
+
+3624
+
+116
+
+Add to List
+
+Share
+Given a string s, partition s such that every substring of the partition is a palindrome. Return all possible palindrome partitioning of s.
+
+A palindrome string is a string that reads the same backward as forward.
+
+ 
+
+Example 1:
+
+Input: s = "aab"
+Output: [["a","a","b"],["aa","b"]]
+Example 2:
+
+Input: s = "a"
+Output: [["a"]]
+
+
+==================================================================================================
+class Solution {
+public:
+    bool ispal(string s, int i , int j)
+    {
+        while(i<=j)
+        {
+            if(s[i++]!=s[j--])
+                return false;
+        }
+        
+        return 1;
+        
+    }
+    
+    void helper( string s ,  vector<string>&v, int i, vector<vector<string>>&sol)
+        
+    {
+        if(i==s.size())
+        {
+            sol.push_back(v);
+            return ;
+        }
+        
+        for(int start = i;start<s.size(); start++)
+        {
+            if(ispal(s, i, start))
+            {
+                v.push_back(s.substr(i,start-i+1));
+                helper(s,v,start+1,sol);
+                v.pop_back();
+            }
+            
+        }
+        
+    }
+    vector<vector<string>> partition(string s) {
+        
+          vector<vector<string>> sol;
+       //sort(s.begin(), s.end());
+        vector<string>v;
+        helper(s,v,0,sol);
+        
+        return sol;
+        
+    }
+};
